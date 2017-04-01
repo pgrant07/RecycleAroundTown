@@ -13,15 +13,39 @@ public class RecycleBin {
     private int size;
 
     public RecycleBin(){
-        location=new Location();
-        isPublic=false;
-        size=0;
+        setLocation(new Location("dummyprovider"));
+        setPublic(false);
+        setSize(0);
     }
 
-    public RecycleBin(location, isPublic, size){
-        location=new Location();
-        isPublic=false;
-        size=0;
+    public RecycleBin(Location location, boolean isPublic, int size){
+        this.setLocation(location);
+        this.setPublic(isPublic);
+        this.setSize(size);
     }
 
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 }
