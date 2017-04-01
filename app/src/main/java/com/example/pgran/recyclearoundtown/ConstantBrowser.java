@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.method.NumberKeyListener;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,18 +27,19 @@ public class ConstantBrowser extends ListActivity {
     private static final int CLOSE_ID = Menu.FIRST+4;
     private SQLiteDatabase db=null;
     private Cursor constantsCursor=null;
-
+    private static final String TAG="mymessage";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         db=(new DatabaseHelper(this)).getWritableDatabase();
-        constantsCursor=db.rawQuery("SELECT _ID, title, value "+"FROM constants ORDER BY value", null);
+        //Log.i(TAG, db.rawQuery("SELECT title", null).toString());
+        constantsCursor=db.rawQuery("SELECT _id, title, location, size, status "+"FROM constants ORDER BY title", null);
 
         ListAdapter adapter=new SimpleCursorAdapter(this,
                 R.layout.row, constantsCursor,
-                new String[] {"_id", "title", "value"},
-                new int[] {R.id.myId, R.id.title, R.id.value});
+                new String[] {"_id", "title", "location", "size", "status"},
+                new int[] {R.id.myId, R.id.title, R.id.location, R.id.size, R.id.status});
 
         setListAdapter(adapter);
         registerForContextMenu(getListView());

@@ -5,4 +5,5 @@
     <string name="cancel">Cancel</string>
     <string name="add_title">Add Constant</string>
     <string name="delete_title">Delete Constant: Are You Sure?</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
