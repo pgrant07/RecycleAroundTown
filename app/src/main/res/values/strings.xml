@@ -7,6 +7,7 @@
     <string name="add_title">Add Constant</string>
     <string name="delete_title">Delete Constant: Are You Sure?</string>
     <string name="title_activity_add_bin">Add Recycle Bin</string>
+    <string name="title_activity_maps">Add Maps</string>
 
     <string name="size_prompt">Size of Recycle Bin</string>
     <string-array name="bin_arrays">
