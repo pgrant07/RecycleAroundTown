@@ -9,8 +9,10 @@ import android.location.Location;
 public class RecycleBin {
 
     private Location location;
+    private String name;
     private boolean isPublic;
     private int size;
+
 
     public RecycleBin(){
         setLocation(new Location("dummyprovider"));
@@ -47,5 +49,13 @@ public class RecycleBin {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
