@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Recycle Around Town</string>
     <string name="action_settings">Settings</string>
@@ -5,5 +6,23 @@
     <string name="cancel">Cancel</string>
     <string name="add_title">Add Constant</string>
     <string name="delete_title">Delete Constant: Are You Sure?</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_add_bin">Add Recycle Bin</string>
+
+    <string name="size_prompt">Size of Recycle Bin</string>
+    <string-array name="bin_arrays">
+        <item>Office size</item>
+        <item>Household size</item>
+        <item>Municipal size</item>
+    </string-array>
+
+    <string name="paper">Paper</string>
+    <string name="plastic">Plastic</string>
+    <string name="glass">Glass</string>
+
+    <string name="addBin">Add Recycle Bin</string>
+
+
+
 </resources>
+
+
