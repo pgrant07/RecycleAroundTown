@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(104,151,187); }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.pgran.recyclearoundtown</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.AlertDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.app.ListActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.ContentValues</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.text.method.NumberKeyListener</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.ContextMenu</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.Menu</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View.OnClickListener</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.SimpleCursorAdapter</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">ConstantsBrowser </span><span class="s0">extends </span><span class="s1">ListActivity { 
+    </span><span class="s0">private static final int </span><span class="s1">ADD_ID = Menu.FIRST+</span><span class="s2">1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static final int </span><span class="s1">DELETE_ID = Menu.FIRST+</span><span class="s2">3</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static final int </span><span class="s1">CLOSE_ID = Menu.FIRST+</span><span class="s2">4</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">SQLiteDatabase db=</span><span class="s0">null;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Cursor constantsCursor=</span><span class="s0">null;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+ 
+        db=(</span><span class="s0">new </span><span class="s1">DatabaseHelper(</span><span class="s0">this</span><span class="s1">)).getWritableDatabase()</span><span class="s0">;</span><span class="s1"> 
+        constantsCursor=db.rawQuery(</span><span class="s3">&quot;SELECT _ID, title, value &quot;</span><span class="s1">+</span><span class="s3">&quot;FROM constants ORDER BY value&quot;</span><span class="s0">, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        ListAdapter adapter=</span><span class="s0">new </span><span class="s1">SimpleCursorAdapter(</span><span class="s0">this,</span><span class="s1"> 
+                R.layout.row</span><span class="s0">, </span><span class="s1">constantsCursor</span><span class="s0">,</span><span class="s1"> 
+                </span><span class="s0">new </span><span class="s1">String[] {</span><span class="s3">&quot;_id&quot;</span><span class="s0">, </span><span class="s3">&quot;title&quot;</span><span class="s0">, </span><span class="s3">&quot;value&quot;</span><span class="s1">}</span><span class="s0">,</span><span class="s1"> 
+                </span><span class="s0">new int</span><span class="s1">[] {R.id.myId</span><span class="s0">, </span><span class="s1">R.id.title</span><span class="s0">, </span><span class="s1">R.id.value})</span><span class="s0">;</span><span class="s1"> 
+ 
+        setListAdapter(adapter)</span><span class="s0">;</span><span class="s1"> 
+        registerForContextMenu(getListView())</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onDestroy() { 
+        </span><span class="s0">super</span><span class="s1">.onDestroy()</span><span class="s0">;</span><span class="s1"> 
+ 
+        constantsCursor.close()</span><span class="s0">;</span><span class="s1"> 
+        db.close()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        menu.add(Menu.NONE</span><span class="s0">, </span><span class="s1">ADD_ID</span><span class="s0">, </span><span class="s1">Menu.NONE</span><span class="s0">, </span><span class="s3">&quot;Add&quot;</span><span class="s1">) 
+                .setIcon(R.drawable.add) 
+                .setAlphabeticShortcut(</span><span class="s3">'a'</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        menu.add(Menu.NONE</span><span class="s0">, </span><span class="s1">CLOSE_ID</span><span class="s0">, </span><span class="s1">Menu.NONE</span><span class="s0">, </span><span class="s3">&quot;Close&quot;</span><span class="s1">) 
+                .setIcon(R.drawable.eject) 
+                .setAlphabeticShortcut(</span><span class="s3">'c'</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">return</span><span class="s1">(</span><span class="s0">super</span><span class="s1">.onCreateOptionsMenu(menu))</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s0">switch </span><span class="s1">(item.getItemId()) { 
+            </span><span class="s0">case </span><span class="s1">ADD_ID: 
+                add()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return</span><span class="s1">(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">case </span><span class="s1">CLOSE_ID: 
+                finish()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return</span><span class="s1">(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">return</span><span class="s1">(</span><span class="s0">super</span><span class="s1">.onOptionsItemSelected(item))</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onCreateContextMenu(ContextMenu menu</span><span class="s0">, </span><span class="s1">View v</span><span class="s0">,</span><span class="s1"> 
+                                    ContextMenu.ContextMenuInfo menuInfo) { 
+        menu.add(Menu.NONE</span><span class="s0">, </span><span class="s1">DELETE_ID</span><span class="s0">, </span><span class="s1">Menu.NONE</span><span class="s0">, </span><span class="s3">&quot;Delete&quot;</span><span class="s1">) 
+                .setIcon(R.drawable.delete) 
+                .setAlphabeticShortcut(</span><span class="s3">'d'</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onContextItemSelected(MenuItem item) { 
+        </span><span class="s0">switch </span><span class="s1">(item.getItemId()) { 
+            </span><span class="s0">case </span><span class="s1">DELETE_ID: 
+                AdapterView.AdapterContextMenuInfo info= 
+                        (AdapterView.AdapterContextMenuInfo)item.getMenuInfo()</span><span class="s0">;</span><span class="s1"> 
+ 
+                delete(info.id)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return</span><span class="s1">(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">return</span><span class="s1">(</span><span class="s0">super</span><span class="s1">.onOptionsItemSelected(item))</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">add() { 
+        LayoutInflater inflater=LayoutInflater.from(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        View addView=inflater.inflate(R.layout.add_edit</span><span class="s0">, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">final </span><span class="s1">DialogWrapper wrapper=</span><span class="s0">new </span><span class="s1">DialogWrapper(addView)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(</span><span class="s0">this</span><span class="s1">) 
+                .setTitle(R.string.add_title) 
+                .setView(addView) 
+                .setPositiveButton(R.string.ok</span><span class="s0">,</span><span class="s1"> 
+                        </span><span class="s0">new </span><span class="s1">DialogInterface.OnClickListener() { 
+                            </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">,</span><span class="s1"> 
+                                                </span><span class="s0">int </span><span class="s1">whichButton) { 
+                                processAdd(wrapper)</span><span class="s0">;</span><span class="s1"> 
+                            } 
+                        }) 
+                .setNegativeButton(R.string.cancel</span><span class="s0">,</span><span class="s1"> 
+                        </span><span class="s0">new </span><span class="s1">DialogInterface.OnClickListener() { 
+                            </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">,</span><span class="s1"> 
+                                                </span><span class="s0">int </span><span class="s1">whichButton) { 
+                                </span><span class="s4">// ignore, just dismiss</span><span class="s1"> 
+                            } 
+                        }) 
+                .show()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">delete(</span><span class="s0">final long </span><span class="s1">rowId) { 
+        </span><span class="s0">if </span><span class="s1">(rowId&gt;</span><span class="s2">0</span><span class="s1">) { 
+            </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(</span><span class="s0">this</span><span class="s1">) 
+                    .setTitle(R.string.delete_title) 
+                    .setPositiveButton(R.string.ok</span><span class="s0">,</span><span class="s1"> 
+                            </span><span class="s0">new </span><span class="s1">DialogInterface.OnClickListener() { 
+                                </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">,</span><span class="s1"> 
+                                                    </span><span class="s0">int </span><span class="s1">whichButton) { 
+                                    processDelete(rowId)</span><span class="s0">;</span><span class="s1"> 
+                                } 
+                            }) 
+                    .setNegativeButton(R.string.cancel</span><span class="s0">,</span><span class="s1"> 
+                            </span><span class="s0">new </span><span class="s1">DialogInterface.OnClickListener() { 
+                                </span><span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">,</span><span class="s1"> 
+                                                    </span><span class="s0">int </span><span class="s1">whichButton) { 
+                                    </span><span class="s4">// ignore, just dismiss</span><span class="s1"> 
+                                } 
+                            }) 
+                    .show()</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">processAdd(DialogWrapper wrapper) { 
+        ContentValues values=</span><span class="s0">new </span><span class="s1">ContentValues(</span><span class="s2">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        values.put(</span><span class="s3">&quot;title&quot;</span><span class="s0">, </span><span class="s1">wrapper.getTitle())</span><span class="s0">;</span><span class="s1"> 
+        values.put(</span><span class="s3">&quot;value&quot;</span><span class="s0">, </span><span class="s1">wrapper.getValue())</span><span class="s0">;</span><span class="s1"> 
+ 
+        db.insert(</span><span class="s3">&quot;constants&quot;</span><span class="s0">, </span><span class="s3">&quot;title&quot;</span><span class="s0">, </span><span class="s1">values)</span><span class="s0">;</span><span class="s1"> 
+        constantsCursor.requery()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">processDelete(</span><span class="s0">long </span><span class="s1">rowId) { 
+        String[] args={String.valueOf(rowId)}</span><span class="s0">;</span><span class="s1"> 
+ 
+        db.delete(</span><span class="s3">&quot;constants&quot;</span><span class="s0">, </span><span class="s3">&quot;_ID=?&quot;</span><span class="s0">, </span><span class="s1">args)</span><span class="s0">;</span><span class="s1"> 
+        constantsCursor.requery()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">class </span><span class="s1">DialogWrapper { 
+        EditText titleField=</span><span class="s0">null;</span><span class="s1"> 
+        EditText valueField=</span><span class="s0">null;</span><span class="s1"> 
+        View base=</span><span class="s0">null;</span><span class="s1"> 
+ 
+        DialogWrapper(View base) { 
+            </span><span class="s0">this</span><span class="s1">.base=base</span><span class="s0">;</span><span class="s1"> 
+            valueField=(EditText)base.findViewById(R.id.value)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        String getTitle() { 
+            </span><span class="s0">return</span><span class="s1">(getTitleField().getText().toString())</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">float </span><span class="s1">getValue() { 
+            </span><span class="s0">return</span><span class="s1">(</span><span class="s0">new </span><span class="s1">Float(getValueField().getText().toString()) 
+                    .floatValue())</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">private </span><span class="s1">EditText getTitleField() { 
+            </span><span class="s0">if </span><span class="s1">(titleField==</span><span class="s0">null</span><span class="s1">) { 
+                titleField=(EditText)base.findViewById(R.id.title)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+            </span><span class="s0">return</span><span class="s1">(titleField)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">private </span><span class="s1">EditText getValueField() { 
+            </span><span class="s0">if </span><span class="s1">(valueField==</span><span class="s0">null</span><span class="s1">) { 
+                valueField=(EditText)base.findViewById(R.id.value)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+            </span><span class="s0">return</span><span class="s1">(valueField)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+}</span></pre>
+</body>
+</html>
