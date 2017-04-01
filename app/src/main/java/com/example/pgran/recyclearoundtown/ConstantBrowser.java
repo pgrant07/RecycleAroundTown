@@ -20,7 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class MainActivity extends ListActivity {
+public class ConstantBrowser extends ListActivity {
     private static final int ADD_ID = Menu.FIRST+1;
     private static final int DELETE_ID = Menu.FIRST+3;
     private static final int CLOSE_ID = Menu.FIRST+4;
@@ -151,7 +151,9 @@ public class MainActivity extends ListActivity {
         ContentValues values=new ContentValues(2);
 
         values.put("title", wrapper.getTitle());
-        values.put("value", wrapper.getValue());
+        values.put("value", wrapper.getLocation());
+        values.put("size", wrapper.getSize());
+        values.put("status", wrapper.getStatus());
 
         db.insert("constants", "title", values);
         constantsCursor.requery();
@@ -166,21 +168,30 @@ public class MainActivity extends ListActivity {
 
     class DialogWrapper {
         EditText titleField=null;
-        EditText valueField=null;
+        EditText locationField=null;
+        EditText sizeField=null;
+        EditText statusField=null;
         View base=null;
 
         DialogWrapper(View base) {
             this.base=base;
-            valueField=(EditText)base.findViewById(R.id.value);
+            locationField=(EditText)base.findViewById(R.id.location);
         }
 
         String getTitle() {
             return(getTitleField().getText().toString());
         }
 
-        float getValue() {
-            return(new Float(getValueField().getText().toString())
-                    .floatValue());
+        String getLocation() {
+            return(getLocationField().getText().toString());
+        }
+
+        int getSize(){
+            return(Integer.parseInt(getSizeField().getText().toString()));
+        }
+
+        String getStatus(){
+            return getStatusField().getText().toString();
         }
 
         private EditText getTitleField() {
@@ -191,12 +202,27 @@ public class MainActivity extends ListActivity {
             return(titleField);
         }
 
-        private EditText getValueField() {
-            if (valueField==null) {
-                valueField=(EditText)base.findViewById(R.id.value);
+        private EditText getLocationField() {
+            if (locationField==null) {
+                locationField=(EditText)base.findViewById(R.id.location);
             }
 
-            return(valueField);
+            return(locationField);
+        }
+
+        private EditText getSizeField() {
+            if (sizeField==null) {
+                sizeField=(EditText)base.findViewById(R.id.size);
+            }
+
+            return(sizeField);
+        }
+        private EditText getStatusField() {
+            if (statusField==null) {
+                statusField=(EditText)base.findViewById(R.id.status);
+            }
+
+            return(statusField);
         }
     }
 }

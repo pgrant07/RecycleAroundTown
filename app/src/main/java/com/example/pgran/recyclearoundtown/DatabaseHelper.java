@@ -11,7 +11,9 @@ import android.hardware.SensorManager;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="db";
     public static final String TITLE="title";
-    public static final String VALUE="value";
+    public static final String LOCATION="location";
+    public static final String SIZE="size";
+    public static final String STATUS="status";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -19,7 +21,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE constants (name TEXT PRIMARY KEY AUTOINCREMENT, location TEXT, size INTEGER, status TEXT );");
 
+        ContentValues cv=new ContentValues();
+
+        cv.put(TITLE, "Kansas Convention Center");
+        cv.put(LOCATION, "39.09875°, -94.58723°");
+        cv.put(SIZE, 3);
+        cv.put(STATUS, "public");
+        db.insert("constants", TITLE, cv);
     }
 
     @Override
